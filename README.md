@@ -31,7 +31,7 @@ Each key is a package name that will have external symbols resolved. Each
 package has an associated `dtsPath` and `externalBaseURL` option. `dtsPath` is a
 path to the type definitions file of the package, which will be used to parse
 which symbols the package is exporting. If the path starts with a `~`, then the
-path will be relative to it's node_modules package folder. `externalBaseURL` is
+path will be relative to its node_modules package folder. `externalBaseURL` is
 the URL prefix used for resolving the URLs.
 
 The plugin will then resolve unknown symbols to each of the supplied libraries
@@ -60,6 +60,7 @@ This project is licensed under the MIT license (see the LICENSE file)
 
 This project uses the following open-source projects:
 - [@types/node (DefinitelyTyped)](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/node) licensed under the MIT license
+- [esbuild](https://github.com/evanw/esbuild) licensed under the MIT license
 - [resolve-package-path](https://github.com/stefanpenner/resolve-package-path) licensed under the MIT license
 - [typedoc](https://github.com/TypeStrong/TypeDoc) licensed under the Apache 2.0 license
 - [typescript](https://github.com/Microsoft/TypeScript) licensed under the Apache 2.0 license
