@@ -1,5 +1,6 @@
 import { Application, ParameterType } from 'typedoc';
 import { addResolver } from './addResolver';
+
 import type { ExternalDocumentationOption } from './ExternalDocumentationOption';
 
 /*!
