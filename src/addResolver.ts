@@ -50,12 +50,10 @@ export function addResolver(app: Application, packageName: string, packageDTSPat
     const variables = new Set();
 
     for (const tsSymbol of tsExports) {
-
-        const symbol = (() => {
-            if (tsSymbol.getFlags() === SymbolFlags.Alias)
-                return checker.getAliasedSymbol(tsSymbol);
-            return tsSymbol;
-        })();
+        let symbol = tsSymbol;
+        if (tsSymbol.getFlags() === SymbolFlags.Alias) {
+            symbol = checker.getAliasedSymbol(tsSymbol);
+        }
 
         const declaration = symbol.declarations?.[0];
 
