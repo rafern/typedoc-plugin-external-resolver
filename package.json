@@ -5,7 +5,8 @@
   "main": "./dist/index.js",
   "exports": "./dist/index.js",
   "scripts": {
-    "build": "esbuild --bundle --minify --platform=node --external:typescript --external:typedoc src/index.ts --outfile=dist/index.js"
+    "build": "esbuild --bundle --minify --platform=node --external:typescript --external:typedoc src/index.ts --outfile=dist/index.js",
+    "prepare": "npm run build"
   },
   "files": [
     "dist"
