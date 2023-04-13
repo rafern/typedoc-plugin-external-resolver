@@ -1,4 +1,4 @@
-import { createProgram, SyntaxKind } from 'typescript';
+import { createProgram, SymbolFlags, SyntaxKind } from 'typescript';
 import resolvePackagePath from 'resolve-package-path';
 import path from 'node:path';
 import { Application } from 'typedoc';
@@ -49,40 +49,48 @@ export function addResolver(app: Application, packageName: string, packageDTSPat
     const functions = new Set();
     const variables = new Set();
 
-    for(const tsSymbol of tsExports) {
-        const decl = tsSymbol.declarations?.[0];
-        if (!decl) {
+    for (const tsSymbol of tsExports) {
+
+        const symbol = (() => {
+            if (tsSymbol.getFlags() === SymbolFlags.Alias)
+                return checker.getAliasedSymbol(tsSymbol);
+            return tsSymbol;
+        })();
+
+        const declaration = symbol.declarations?.[0];
+
+        if (!declaration) {
             continue;
         }
 
-        switch(decl.kind) {
+        switch (declaration?.kind) {
             case SyntaxKind.ClassDeclaration:
-                classes.add(tsSymbol.name);
+                classes.add(symbol.name);
                 break;
             case SyntaxKind.InterfaceDeclaration:
-                interfaces.add(tsSymbol.name);
+                interfaces.add(symbol.name);
                 break;
             case SyntaxKind.EnumDeclaration:
-                enums.add(tsSymbol.name);
+                enums.add(symbol.name);
                 break;
             case SyntaxKind.TypeAliasDeclaration:
-                types.add(tsSymbol.name);
+                types.add(symbol.name);
                 break;
             case SyntaxKind.FunctionDeclaration:
-                functions.add(tsSymbol.name);
+                functions.add(symbol.name);
                 break;
             case SyntaxKind.VariableDeclaration:
-            {
-                const type = checker.getTypeOfSymbolAtLocation(tsSymbol, decl);
+                {
+                    const type = checker.getTypeOfSymbolAtLocation(symbol, declaration);
 
-                if(type.getCallSignatures().length > 0) {
-                    functions.add(tsSymbol.name);
+                    if (type.getCallSignatures().length > 0) {
+                        functions.add(symbol.name);
+                        break;
+                    }
+
+                    variables.add(symbol.name);
                     break;
                 }
-
-                variables.add(tsSymbol.name);
-                break;
-            }
         }
     }
 
@@ -111,17 +119,17 @@ export function addResolver(app: Application, packageName: string, packageDTSPat
                     // this is an export. check the export list to guess the type
                     first = false;
 
-                    if(classes.has(name)) {
+                    if (classes.has(name)) {
                         url = `${url}/classes/${name}.html`;
-                    } else if(interfaces.has(name)) {
+                    } else if (interfaces.has(name)) {
                         url = `${url}/interfaces/${name}.html`;
-                    } else if(enums.has(name)) {
+                    } else if (enums.has(name)) {
                         url = `${url}/enums/${name}.html`;
-                    } else if(types.has(name)) {
+                    } else if (types.has(name)) {
                         url = `${url}/types/${name}.html`;
-                    } else if(functions.has(name)) {
+                    } else if (functions.has(name)) {
                         url = `${url}/functions/${name}.html`;
-                    } else if(variables.has(name)) {
+                    } else if (variables.has(name)) {
                         url = `${url}/variables/${name}.html`;
                     } else if (strict) {
                         return;
