@@ -1,7 +1,6 @@
 import { Application, ParameterType } from 'typedoc';
-import { addResolver } from './addResolver';
-
-import type { ExternalDocumentationOption } from './ExternalDocumentationOption';
+import { addResolver } from './addResolver.js';
+import type { ExternalDocumentationOption } from './ExternalDocumentationOption.js';
 
 /*!
  * @file typedoc-plugin-external-resolver <https://github.com/rafern/typedoc-plugin-external-resolver>

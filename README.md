@@ -14,6 +14,13 @@ plugin to support libraries other than `canvas-ui`.
 
 ## Usage
 
+Add the `--plugin typedoc-plugin-external-resolver` option to your typedoc call.
+For example:
+
+```sh
+typedoc --options typedoc.json --plugin typedoc-plugin-external-resolver
+```
+
 Add a `externalDocumentation` option to your `typedoc.json`. For example:
 
 ```json

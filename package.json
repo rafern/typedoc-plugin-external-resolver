@@ -1,11 +1,11 @@
 {
   "name": "typedoc-plugin-external-resolver",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "TypeDoc plugin that resolves references to external typed modules",
-  "main": "./dist/index.js",
-  "exports": "./dist/index.js",
+  "main": "dist/index.js",
   "scripts": {
     "build": "esbuild --bundle --minify --platform=node --external:typescript --external:typedoc src/index.ts --outfile=dist/index.js",
+    "typecheck": "tsc --noEmit",
     "prepare": "npm run build"
   },
   "files": [
@@ -28,14 +28,14 @@
   },
   "homepage": "https://github.com/rafern/typedoc-plugin-external-resolver#readme",
   "devDependencies": {
-    "@types/node": "^18.11.18",
-    "esbuild": "^0.17.4",
+    "@types/node": "^18.19.3",
+    "esbuild": "^0.19.10",
     "resolve-package-path": "^4.0.3",
-    "typedoc": "^0.23.24",
-    "typescript": "^4.9.4"
+    "typedoc": "^0.25.4",
+    "typescript": "^5.3.3"
   },
   "peerDependencies": {
-    "typedoc": "0.23.x",
-    "typescript": "4.x"
+    "typedoc": "0.25.x",
+    "typescript": "4.x || 5.x"
   }
 }

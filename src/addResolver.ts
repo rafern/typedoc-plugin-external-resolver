@@ -1,9 +1,7 @@
 import { createProgram, SymbolFlags, SyntaxKind } from 'typescript';
 import resolvePackagePath from 'resolve-package-path';
 import path from 'node:path';
-import { Application } from 'typedoc';
-
-import type { DeclarationReference } from 'typedoc';
+import { Application, type DeclarationReference } from 'typedoc';
 
 export function addResolver(app: Application, packageName: string, packageDTSPath: string, externalBaseURL: string) {
     let packageDTSAbsPath: string;
